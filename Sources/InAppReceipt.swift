@@ -84,6 +84,12 @@ public class InAppReceipt
 
 public extension InAppReceipt
 {
+    // Sandbox, Production, ProductionSandbox
+    var environment: String
+    {
+        return payload.environment
+    }
+
     /// The app’s bundle identifier
     var bundleIdentifier: String
     {
