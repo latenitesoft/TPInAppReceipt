@@ -19,6 +19,7 @@ final class TPInAppReceiptTests: XCTestCase {
 		self.measure {
 			let r = try! InAppReceipt(receiptData: newReceipt)
 			print(r.creationDate)
+            XCTAssertNotNil(r.originalPurchaseDate)
 		}
 		
 	}

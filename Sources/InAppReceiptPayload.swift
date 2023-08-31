@@ -20,6 +20,9 @@ struct InAppReceiptPayload
     /// The app’s version number
 	let appVersion: String
     
+    /// The date the app that was originally installed or purchased.
+    let originalPurchaseDate: Date?
+    
     /// The version of the app that was originally purchased.
 	let originalAppVersion: String
     
@@ -49,10 +52,11 @@ struct InAppReceiptPayload
 	
     /// Initialize a `InAppReceipt` passing all values
     ///
-	init(bundleIdentifier: String, appVersion: String, originalAppVersion: String, purchases: [InAppPurchase], expirationDate: Date?, bundleIdentifierData: Data, opaqueValue: Data, receiptHash: Data, creationDate: Date, ageRating: String, environment: String, rawData: Data)
+    init(bundleIdentifier: String, appVersion: String, originalPurchaseDate: Date?, originalAppVersion: String, purchases: [InAppPurchase], expirationDate: Date?, bundleIdentifierData: Data, opaqueValue: Data, receiptHash: Data, creationDate: Date, ageRating: String, environment: String, rawData: Data)
     {
         self.bundleIdentifier = bundleIdentifier
         self.appVersion = appVersion
+        self.originalPurchaseDate = originalPurchaseDate
         self.originalAppVersion = originalAppVersion
         self.purchases = purchases
         self.expirationDate = expirationDate

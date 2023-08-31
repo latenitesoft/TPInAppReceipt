@@ -105,6 +105,7 @@ extension InAppReceiptPayload: ASN1Decodable
 		var bundleIdentifierData = Data()
 		var appVersion = ""
 		var originalAppVersion = ""
+        var originalPurchaseDate: Date? = Date()
 		var purchases = [InAppPurchase]()
 		var opaqueValue = Data()
 		var receiptHash = Data()
@@ -138,6 +139,9 @@ extension InAppReceiptPayload: ASN1Decodable
 					receiptHash = valueContainer.valueData
 				case InAppReceiptField.inAppPurchaseReceipt:
 					purchases.append(try valueContainer.decode(InAppPurchase.self))
+                case InAppReceiptField.receiptOriginalPurchaseDate:
+                    let originalPurchaseDateString = try valueContainer.decode(String.self, template: .universal(ASN1Identifier.Tag.ia5String))
+                    originalPurchaseDate = originalPurchaseDateString.rfc3339date()
 				case InAppReceiptField.originalAppVersion:
 					originalAppVersion = try valueContainer.decode(String.self)
 				case InAppReceiptField.expirationDate:
@@ -160,6 +164,7 @@ extension InAppReceiptPayload: ASN1Decodable
 		
 		self.init(bundleIdentifier: bundleIdentifier,
 				  appVersion: appVersion,
+                  originalPurchaseDate: originalPurchaseDate,
 				  originalAppVersion: originalAppVersion,
 				  purchases: purchases,
 				  expirationDate: expirationDate,
